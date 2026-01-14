@@ -26,6 +26,8 @@
         <h1 class="book-title">{{ book.title }}</h1>
         <p *ngIf="book.subtitle" class="book-subtitle">{{ book.subtitle }}</p>
         
+        <div class="price-badge">💰 $19.99</div>
+        
         <div class="book-meta">
           <div *ngIf="book.first_publish_date" class="meta-item">
             <strong>First Published:</strong>
@@ -45,6 +47,11 @@
               </span>
             </span>
           </div>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn-primary" (click)="addToCart()">🛒 Add to Cart</button>
+          <button class="btn-secondary" (click)="addToWishlist()">❤️ Add to Wishlist</button>
         </div>
       </div>
     </div>

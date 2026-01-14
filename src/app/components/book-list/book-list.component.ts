@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { BookService } from '../../services/book.service';
+import { CartService } from '../../services/cart.service';
+import { WishlistService } from '../../services/wishlist.service';
 
 @Component({
   selector: 'app-book-list',
@@ -26,7 +28,6 @@ import { BookService } from '../../services/book.service';
       <div *ngIf="!isLoading && booksList.length > 0" class="books-grid">
         <div *ngFor="let book of booksList; let i = index" 
              class="book-card" 
-             (click)="viewBookDetails(book)"
              [style.animation-delay]="(i * 0.05) + 's'">
           <div class="book-cover">
             <img 
@@ -35,7 +36,7 @@ import { BookService } from '../../services/book.service';
               onerror="this.src='https://via.placeholder.com/200x280/151f57/ffffff?text=No+Cover'"
             />
             <div class="book-overlay">
-              <span class="view-details">View Details</span>
+              <span class="view-details" (click)="viewBookDetails(book)">View Details</span>
             </div>
           </div>
           <div class="book-info">
@@ -48,6 +49,11 @@ import { BookService } from '../../services/book.service';
               <span class="meta-tag" *ngIf="book.edition_count">
                 📚 {{ book.edition_count }} ed.
               </span>
+              <span class="price-tag">💰 $19.99</span>
+            </div>
+            <div class="book-actions">
+              <button class="btn-cart" (click)="addToCart(book)">🛒 Cart</button>
+              <button class="btn-wishlist" (click)="addToWishlist(book)">❤️ Save</button>
             </div>
           </div>
         </div>
@@ -77,13 +83,13 @@ import { BookService } from '../../services/book.service';
     }
 
     .count-badge {
-      background: #667eea;
+      background: #151f57;
       color: white;
       padding: 10px 24px;
       border-radius: 20px;
       font-weight: 600;
       font-size: 1rem;
-      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+      box-shadow: 0 2px 8px rgba(21, 31, 87, 0.2);
     }
 
     .loading {
@@ -232,7 +238,7 @@ import { BookService } from '../../services/book.service';
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(102, 126, 234, 0.95);
+      background: rgba(21, 31, 87, 0.95);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -289,10 +295,60 @@ import { BookService } from '../../services/book.service';
     .meta-tag {
       font-size: 0.75rem;
       padding: 4px 10px;
-      background: #667eea;
+      background: #151f57;
       color: white;
       border-radius: 10px;
       font-weight: 500;
+    }
+
+    .price-tag {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      background: #ff6b6b;
+      color: white;
+      border-radius: 10px;
+      font-weight: 700;
+    }
+
+    .book-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .btn-cart, .btn-wishlist {
+      flex: 1;
+      padding: 8px 10px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .btn-cart {
+      background: linear-gradient(135deg, #151f57 0%, #0f1438 100%);
+      color: white;
+    }
+
+    .btn-cart:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(21, 31, 87, 0.3);
+    }
+
+    .btn-wishlist {
+      background: #f8f9fa;
+      color: #333;
+      border: 2px solid #e0e0e0;
+    }
+
+    .btn-wishlist:hover {
+      background: #fff5f5;
+      border-color: #ff6b6b;
+      color: #ff6b6b;
+      transform: translateY(-2px);
     }
 
     @media (max-width: 768px) {
@@ -325,7 +381,12 @@ export class BookListComponent implements OnInit {
   isLoading: boolean = false;
   errorMessage: string = '';
 
-  constructor(private bookService: BookService, private router: Router) { }
+  constructor(
+    private bookService: BookService,
+    private router: Router,
+    private cartService: CartService,
+    private wishlistService: WishlistService
+  ) { }
 
   ngOnInit(): void {
     this.loadBooks();
@@ -393,4 +454,47 @@ export class BookListComponent implements OnInit {
       console.error('No valid book ID found', book);
     }
   }
+
+  addToCart(book: any, event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.cartService.addToCart({
+      id: this.getBookId(book),
+      key: book.key,
+      title: book.title,
+      cover_id: book.cover_id || book.cover_i,
+      price: 19.99,
+      quantity: 1
+    });
+    alert('✅ Book added to cart!');
+  }
+
+  addToWishlist(book: any, event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.wishlistService.addToWishlist({
+      id: this.getBookId(book),
+      key: book.key,
+      title: book.title,
+      cover_id: book.cover_id || book.cover_i,
+      addedDate: new Date()
+    });
+    alert('❤️ Book saved to wishlist!');
+  }
+
+  private getBookId(book: any): string {
+    if (book.key && book.key.includes('/works/')) {
+      return book.key.split('/').pop();
+    } else if (book.key) {
+      return book.key;
+    } else if (book.work_key && book.work_key.length > 0) {
+      return book.work_key[0];
+    } else if (book.edition_key && book.edition_key.length > 0) {
+      return book.edition_key[0];
+    }
+    return '';
+  }
 }
+

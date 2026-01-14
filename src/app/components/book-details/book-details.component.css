@@ -101,6 +101,59 @@
   font-style: italic;
 }
 
+.price-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+  color: white;
+  padding: 10px 16px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 25px;
+  margin-bottom: 30px;
+}
+
+.btn-primary, .btn-secondary {
+  flex: 1;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #151f57 0%, #0f1438 100%);
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(21, 31, 87, 0.3);
+}
+
+.btn-secondary {
+  background: #f8f9fa;
+  color: #333;
+  border: 2px solid #e0e0e0;
+}
+
+.btn-secondary:hover {
+  background: #fff5f5;
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+  transform: translateY(-2px);
+}
+
 .book-meta {
   display: flex;
   flex-direction: column;

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { BookService } from '../../services/book.service';
+import { CartService } from '../../services/cart.service';
+import { WishlistService } from '../../services/wishlist.service';
 
 @Component({
   selector: 'app-book-details',
@@ -19,7 +21,9 @@ export class BookDetailsComponent implements OnInit {
   constructor(
     private bookService: BookService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private cartService: CartService,
+    private wishlistService: WishlistService
   ) { }
 
   ngOnInit(): void {
@@ -70,5 +74,32 @@ export class BookDetailsComponent implements OnInit {
 
   goBack() {
     this.router.navigate(['/']);
+  }
+
+  addToCart() {
+    if (this.book) {
+      this.cartService.addToCart({
+        id: this.bookId,
+        key: this.book.key,
+        title: this.book.title,
+        cover_id: this.book.covers ? this.book.covers[0] : null,
+        price: 19.99,
+        quantity: 1
+      });
+      alert('✅ Book added to cart!');
+    }
+  }
+
+  addToWishlist() {
+    if (this.book) {
+      this.wishlistService.addToWishlist({
+        id: this.bookId,
+        key: this.book.key,
+        title: this.book.title,
+        cover_id: this.book.covers ? this.book.covers[0] : null,
+        addedDate: new Date()
+      });
+      alert('❤️ Book saved to wishlist!');
+    }
   }
 }
