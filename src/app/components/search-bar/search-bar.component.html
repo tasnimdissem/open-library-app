@@ -1,0 +1,23 @@
+<div class="search-bar">
+  <div class="search-group">
+    <label for="titleInput">Search by Title:</label>
+    <input 
+      id="titleInput"
+      type="text" 
+      [(ngModel)]="titleSearch" 
+      placeholder="Enter book title"
+    />
+    <button (click)="onSearchTitle()">Search</button>
+  </div>
+
+  <div class="search-group">
+    <label for="yearInput">Search by Year:</label>
+    <input 
+      id="yearInput"
+      type="number" 
+      [(ngModel)]="yearSearch" 
+      placeholder="Enter year"
+    />
+    <button (click)="onSearchYear()">Search</button>
+  </div>
+</div>

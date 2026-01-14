@@ -1,0 +1,66 @@
+<div class="book-details-container">
+  <button class="back-button" (click)="goBack()">
+    <span class="arrow">←</span> Back to Library
+  </button>
+  
+  <div *ngIf="isLoading" class="loading">
+    Loading book details...
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!isLoading && book && !errorMessage" class="book-detail">
+    <div class="book-header">
+      <div class="book-cover-section">
+        <img 
+          [src]="getCoverImage(book.covers?.[0])" 
+          [alt]="book.title"
+          onerror="this.src='https://via.placeholder.com/300x400/667eea/ffffff?text=No+Cover'"
+          class="book-cover-large"
+        />
+      </div>
+
+      <div class="book-info-section">
+        <h1 class="book-title">{{ book.title }}</h1>
+        <p *ngIf="book.subtitle" class="book-subtitle">{{ book.subtitle }}</p>
+        
+        <div class="book-meta">
+          <div *ngIf="book.first_publish_date" class="meta-item">
+            <strong>First Published:</strong>
+            <span>{{ book.first_publish_date }}</span>
+          </div>
+          
+          <div *ngIf="book.edition_count" class="meta-item">
+            <strong>Editions:</strong>
+            <span>{{ book.edition_count }}</span>
+          </div>
+
+          <div *ngIf="book.authors && book.authors.length > 0" class="meta-item">
+            <strong>Authors:</strong>
+            <span>
+              <span *ngFor="let author of book.authors; let last = last">
+                {{ author.name }}<span *ngIf="!last">, </span>
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="book-description-section">
+      <h2>Description</h2>
+      <p *ngIf="getDescription()" class="description">
+        {{ getDescription() }}
+      </p>
+      <p *ngIf="!getDescription()" class="no-description">
+        No description available for this book.
+      </p>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && !book && !errorMessage" class="no-book">
+    Book not found.
+  </div>
+</div>

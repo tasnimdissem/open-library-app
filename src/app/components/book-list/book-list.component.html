@@ -1,0 +1,35 @@
+<div class="book-list-container">
+  <div *ngIf="isLoading" class="loading">
+    Loading books...
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!isLoading && booksList.length > 0" class="books-grid">
+    <div *ngFor="let book of booksList" class="book-card">
+      <div class="book-cover">
+        <img 
+          [src]="getCoverImage(book.cover_id)" 
+          [alt]="book.title"
+          (error)="$event.target.src = 'assets/no-cover.png'"
+        />
+      </div>
+      <div class="book-info">
+        <h3 class="book-title">{{ book.title }}</h3>
+        <p class="book-subtitle" *ngIf="book.subtitle">{{ book.subtitle }}</p>
+        <p class="book-year" *ngIf="book.first_publish_year">
+          Published: {{ book.first_publish_year }}
+        </p>
+        <p class="book-editions" *ngIf="book.edition_count">
+          Editions: {{ book.edition_count }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && booksList.length === 0 && !errorMessage" class="no-books">
+    No books found.
+  </div>
+</div>
