@@ -51,7 +51,7 @@ export class BookDetailsComponent implements OnInit {
     if (coverId) {
       return `https://covers.openlibrary.org/b/id/${coverId}-M.jpg`;
     }
-    return 'https://via.placeholder.com/300x400/667eea/ffffff?text=No+Cover';
+    return 'https://via.placeholder.com/300x400/151f57/ffffff?text=No+Cover';
   }
 
   getDescription(): string {

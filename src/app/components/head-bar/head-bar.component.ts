@@ -16,7 +16,7 @@ import { Component } from '@angular/core';
   `,
   styles: [`
     header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #151f57 0%, #0f1438 100%);
       color: white;
       padding: 50px 20px;
       text-align: center;

@@ -32,7 +32,7 @@ import { BookService } from '../../services/book.service';
             <img 
               [src]="getCoverImage(book)" 
               [alt]="book.title"
-              onerror="this.src='https://via.placeholder.com/200x280/667eea/ffffff?text=No+Cover'"
+              onerror="this.src='https://via.placeholder.com/200x280/151f57/ffffff?text=No+Cover'"
             />
             <div class="book-overlay">
               <span class="view-details">View Details</span>
@@ -97,7 +97,7 @@ import { BookService } from '../../services/book.service';
       height: 60px;
       margin: 0 auto 20px;
       border: 4px solid #f3f3f3;
-      border-top: 4px solid #667eea;
+      border-top: 4px solid #151f57;
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
@@ -109,7 +109,7 @@ import { BookService } from '../../services/book.service';
 
     .loading p {
       font-size: 1.2rem;
-      color: #667eea;
+      color: #151f57;
       font-weight: 600;
     }
 
@@ -361,7 +361,7 @@ export class BookListComponent implements OnInit {
     } else if (book.cover_i) {
       return `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`;
     }
-    return 'https://via.placeholder.com/200x280/667eea/ffffff?text=No+Cover';
+    return 'https://via.placeholder.com/200x280/151f57/ffffff?text=No+Cover';
   }
 
   viewBookDetails(book: any) {

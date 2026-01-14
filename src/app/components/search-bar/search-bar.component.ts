@@ -45,7 +45,7 @@ import { CommonModule } from '@angular/common';
   `,
   styles: [`
     .search-bar {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #151f57 0%, #0f1438 100%);
       padding: 30px;
       border-radius: 20px;
       box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
@@ -133,13 +133,14 @@ import { CommonModule } from '@angular/common';
     }
 
     .search-btn.primary {
-      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      background: #151f57;
       color: white;
     }
 
     .search-btn.primary:hover {
+      background: #0f1438;
       transform: translateY(-3px);
-      box-shadow: 0 8px 15px rgba(245, 87, 108, 0.4);
+      box-shadow: 0 8px 15px rgba(21, 31, 87, 0.4);
     }
 
     .search-btn.secondary {
