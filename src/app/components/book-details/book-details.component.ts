@@ -85,7 +85,7 @@ export class BookDetailsComponent implements OnInit {
         key: this.book.key,
         title: this.book.title,
         cover_id: this.book.covers ? this.book.covers[0] : null,
-        price: 19.99,
+        price: 59.97,
         quantity: 1
       });
       this.toastService.success(`"${this.book.title}" added to cart! 🛒`);

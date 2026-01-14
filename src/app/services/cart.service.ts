@@ -34,7 +34,7 @@ export class CartService {
     this.cartCount.next(cart.reduce((sum, item) => sum + item.quantity, 0));
   }
 
-  addToCart(book: any, price: number = 19.99) {
+  addToCart(book: any, price: number = 59.97) {
     const cart = this.cart.value;
     const bookId = book.key || book.id;
     const existingItem = cart.find(item => item.key === bookId);

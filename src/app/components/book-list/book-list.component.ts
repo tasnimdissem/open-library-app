@@ -50,7 +50,7 @@ import { ToastService } from '../../services/toast.service';
               <span class="meta-tag" *ngIf="book.edition_count">
                 📚 {{ book.edition_count }} ed.
               </span>
-              <span class="price-tag">💰 $19.99</span>
+              <span class="price-tag">💰 59.97 TND</span>
             </div>
             <div class="book-actions">
               <button class="btn-cart" (click)="addToCart(book)">🛒 Cart</button>
@@ -466,7 +466,7 @@ export class BookListComponent implements OnInit {
       key: book.key,
       title: book.title,
       cover_id: book.cover_id || book.cover_i,
-      price: 19.99,
+      price: 59.97,
       quantity: 1
     });
     this.toastService.success(`"${book.title}" added to cart! 🛒`);

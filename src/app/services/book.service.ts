@@ -34,7 +34,7 @@ export class BookService {
   }
 
   searchByYear(year: number): Observable<any> {
-    return this.http.get(`https://openlibrary.org/search.json?first_publish_year=${year}`);
+    return this.http.get(`https://openlibrary.org/search.json?publish_year=${year}`);
   }
 
   getBooksList() {
