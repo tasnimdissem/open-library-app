@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart.service';
 import { WishlistService } from '../../services/wishlist.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -55,177 +56,20 @@ import { WishlistService } from '../../services/wishlist.service';
             <span>Total:</span>
             <span>\${{ getTotal().toFixed(2) }}</span>
           </div>
-          <button class="checkout-btn">Proceed to Checkout</button>
+          <button class="checkout-btn" (click)="checkout()">Proceed to Checkout</button>
           <button class="clear-btn" (click)="clearCart()">Clear Cart</button>
         </div>
       </div>
     </div>
   `,
-  styles: [`
-    .cart-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 30px 20px;
-    }
-
-    .back-btn {
-      background: #151f57;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-bottom: 20px;
-    }
-
-    h1 {
-      color: #151f57;
-      margin-bottom: 30px;
-    }
-
-    .empty-cart {
-      text-align: center;
-      padding: 60px 20px;
-      color: #666;
-    }
-
-    .continue-btn {
-      background: #151f57;
-      color: white;
-      padding: 12px 30px;
-      border-radius: 5px;
-      text-decoration: none;
-      margin-top: 20px;
-      display: inline-block;
-    }
-
-    .cart-content {
-      display: grid;
-      grid-template-columns: 1fr 350px;
-      gap: 30px;
-    }
-
-    .cart-items {
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    .cart-item {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      padding: 20px;
-      border-bottom: 1px solid #eee;
-    }
-
-    .item-cover {
-      width: 80px;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 5px;
-    }
-
-    .item-details {
-      flex: 1;
-    }
-
-    .item-price {
-      color: #151f57;
-      font-weight: 600;
-    }
-
-    .item-quantity {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .item-quantity button {
-      background: #151f57;
-      color: white;
-      border: none;
-      width: 30px;
-      height: 30px;
-      cursor: pointer;
-      border-radius: 3px;
-    }
-
-    .item-total {
-      min-width: 100px;
-      text-align: right;
-      font-weight: 600;
-      color: #151f57;
-    }
-
-    .remove-btn {
-      background: #ff6b6b;
-      color: white;
-      border: none;
-      width: 30px;
-      height: 30px;
-      cursor: pointer;
-      border-radius: 3px;
-    }
-
-    .cart-summary {
-      background: white;
-      border-radius: 8px;
-      padding: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      height: fit-content;
-    }
-
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 12px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid #eee;
-    }
-
-    .summary-row.total {
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: #151f57;
-      border-bottom: 2px solid #151f57;
-    }
-
-    .checkout-btn {
-      width: 100%;
-      padding: 12px;
-      background: linear-gradient(135deg, #151f57, #0f1438);
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: 600;
-      margin-top: 20px;
-    }
-
-    .clear-btn {
-      width: 100%;
-      padding: 10px;
-      background: #ddd;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    @media (max-width: 768px) {
-      .cart-content {
-        grid-template-columns: 1fr;
-      }
-    }
-  `]
+  styleUrl: './shopping-cart.component.css'
 })
 export class ShoppingCartComponent implements OnInit {
   cartItems: any[] = [];
   shippingCost: number = 5.00;
   taxRate: number = 0.08;
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService, private toastService: ToastService) { }
 
   ngOnInit() {
     this.cartService.cart$.subscribe(items => {
@@ -276,5 +120,15 @@ export class ShoppingCartComponent implements OnInit {
 
   getTotal(): number {
     return this.getSubtotal() + this.shippingCost + this.getTax();
+  }
+
+  checkout() {
+    if (this.cartItems.length === 0) {
+      this.toastService.info('Your cart is empty. Add some books first!');
+      return;
+    }
+    const total = this.getTotal().toFixed(2);
+    this.toastService.success(`Checkout successful! Total: $${total}`);
+    this.cartService.clearCart();
   }
 }
