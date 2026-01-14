@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   template: `
     <header>
       <div class="logo-container">
-        <div class="logo">📚</div>
+        <img src="images.jpg" alt="IHEC Logo" class="logo" />
         <div class="title-group">
           <h1>IHEC Library</h1>
           <p class="subtitle">Book Search Platform for Students</p>
@@ -35,7 +35,10 @@ import { Component } from '@angular/core';
     }
 
     .logo {
-      font-size: 4rem;
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      border-radius: 10px;
     }
 
     .title-group {
