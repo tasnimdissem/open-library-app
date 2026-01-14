@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BookService } from '../../services/book.service';
 import { CartService } from '../../services/cart.service';
 import { WishlistService } from '../../services/wishlist.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-book-list',
@@ -385,7 +386,8 @@ export class BookListComponent implements OnInit {
     private bookService: BookService,
     private router: Router,
     private cartService: CartService,
-    private wishlistService: WishlistService
+    private wishlistService: WishlistService,
+    private toastService: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -467,7 +469,7 @@ export class BookListComponent implements OnInit {
       price: 19.99,
       quantity: 1
     });
-    alert('✅ Book added to cart!');
+    this.toastService.success(`"${book.title}" added to cart! 🛒`);
   }
 
   addToWishlist(book: any, event?: Event) {
@@ -481,7 +483,7 @@ export class BookListComponent implements OnInit {
       cover_id: book.cover_id || book.cover_i,
       addedDate: new Date()
     });
-    alert('❤️ Book saved to wishlist!');
+    this.toastService.success(`"${book.title}" saved to wishlist! ❤️`);
   }
 
   private getBookId(book: any): string {

@@ -3,11 +3,12 @@ import { Router, RouterOutlet } from '@angular/router';
 import { HeadBarComponent } from './components/head-bar/head-bar.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { BookListComponent } from './components/book-list/book-list.component';
+import { ToastComponent } from './components/toast/toast.component';
 import { BookService } from './services/book.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeadBarComponent, SearchBarComponent, BookListComponent],
+  imports: [RouterOutlet, HeadBarComponent, SearchBarComponent, BookListComponent, ToastComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

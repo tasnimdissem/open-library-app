@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { BookService } from '../../services/book.service';
 import { CartService } from '../../services/cart.service';
 import { WishlistService } from '../../services/wishlist.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-book-details',
@@ -23,7 +24,8 @@ export class BookDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private cartService: CartService,
-    private wishlistService: WishlistService
+    private wishlistService: WishlistService,
+    private toastService: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -86,7 +88,7 @@ export class BookDetailsComponent implements OnInit {
         price: 19.99,
         quantity: 1
       });
-      alert('✅ Book added to cart!');
+      this.toastService.success(`"${this.book.title}" added to cart! 🛒`);
     }
   }
 
@@ -99,7 +101,7 @@ export class BookDetailsComponent implements OnInit {
         cover_id: this.book.covers ? this.book.covers[0] : null,
         addedDate: new Date()
       });
-      alert('❤️ Book saved to wishlist!');
+      this.toastService.success(`"${this.book.title}" saved to wishlist! ❤️`);
     }
   }
 }
